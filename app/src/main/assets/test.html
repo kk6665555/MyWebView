@@ -1,0 +1,26 @@
+<script>
+    function test1(){
+        var here = document.getElementById("here");
+        here.innerHTML=parseInt(Math.random()*49+1);
+    }
+    function test2(){
+        alert("ok");
+    }
+    function test3(name){
+        var here2 = document.getElementById("here2");
+        here2.innerHTML=name;
+    }
+</script>
+
+
+<h1 style="background-color:yellow">Big Company</h1>
+
+<hr/>
+
+Hellow!<br/>
+<a href="map.html">test1.html</a>
+<hr/>
+<button onclick="test1()">Click</button><br/>
+<div id="here"></div>
+<button onclick="test2()">Click</button><br/>
+<div id="here2"></div>

@@ -4,11 +4,16 @@
         here.innerHTML=parseInt(Math.random()*49+1);
     }
     function test2(){
-        alert("ok");
+        test.alert("ok");
     }
     function test3(name){
         var here2 = document.getElementById("here2");
         here2.innerHTML=name;
+    }
+
+    function test4(){
+        var name = document.getElementById("name").value;
+        test.m1(name);
     }
 </script>
 
@@ -24,3 +29,5 @@ Hellow!<br/>
 <div id="here"></div>
 <button onclick="test2()">Click</button><br/>
 <div id="here2"></div>
+<input type="text" id="name"/>
+<button onclick="test4()">Click</button>

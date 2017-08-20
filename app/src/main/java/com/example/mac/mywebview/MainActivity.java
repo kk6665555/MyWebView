@@ -1,6 +1,7 @@
 package com.example.mac.mywebview;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
 import android.location.LocationListener;
@@ -8,9 +9,12 @@ import android.location.LocationManager;
 import android.support.annotation.NonNull;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
@@ -21,6 +25,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText editText;
     private LocationManager lmgr;
     private MyListener myListener;
+    private Myjs myjs;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -29,6 +35,7 @@ public class MainActivity extends AppCompatActivity {
         lmgr = (LocationManager) getSystemService(LOCATION_SERVICE);
         myListener = new MyListener();
 
+        myjs = new Myjs();
         if (ContextCompat.checkSelfPermission(this,
                 Manifest.permission.ACCESS_FINE_LOCATION)
                 != PackageManager.PERMISSION_GRANTED){
@@ -99,8 +106,13 @@ public class MainActivity extends AppCompatActivity {
         webView.setWebViewClient(new WebViewClient());
         WebSettings setting = webView.getSettings();
         setting.setJavaScriptEnabled(true);
+
+        webView.addJavascriptInterface(myjs,"test");
+
+
         //webView.loadUrl("http://www.yahoo.com.tw");
         webView.loadUrl("file:///android_asset/test.html");
+
     }
 
     public void test1(View view){
@@ -116,4 +128,23 @@ public class MainActivity extends AppCompatActivity {
     public void test4(View view){
 
     }
+    private class Myjs{
+        @JavascriptInterface
+        protected void m1(String name){
+            Log.i("test","ok"+ name);
+        }
+
+        @JavascriptInterface
+        public void alert(String mesg){
+            AlertDialog dialo = null;
+            AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+            builder.setTitle("Mesg");
+            builder.setMessage(mesg);
+            dialo = builder.create();
+            dialo.show();
+        }
+    }
+
+
+
 }
